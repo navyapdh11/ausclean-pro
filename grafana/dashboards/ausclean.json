@@ -1,0 +1,63 @@
+{
+  "dashboard": {
+    "title": "AusClean Pro – Full Stack 2026",
+    "uid": "ausclean-pro-2026",
+    "timezone": "Australia/Sydney",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Stripe Payment Events",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 0},
+        "targets": [{"expr": "stripe_webhook_events_total", "legendFormat": "{{event_type}}"}],
+        "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}}}
+      },
+      {
+        "id": 2,
+        "title": "Booking Conversion Rate",
+        "type": "gauge",
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 0},
+        "targets": [{"expr": "rate(bookings_confirmed_total[5m]) / rate(bookings_created_total[5m])"}]
+      },
+      {
+        "id": 3,
+        "title": "Churn Score Distribution",
+        "type": "histogram",
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 0},
+        "targets": [{"expr": "churn_probability_bucket"}]
+      },
+      {
+        "id": 4,
+        "title": "API Response Time (p95)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [{"expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))"}]
+      },
+      {
+        "id": 5,
+        "title": "PostgreSQL Connections",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [{"expr": "pg_stat_activity_count"}]
+      },
+      {
+        "id": 6,
+        "title": "Redis Memory Usage",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "targets": [{"expr": "redis_memory_used_bytes"}]
+      },
+      {
+        "id": 7,
+        "title": "Revenue (AUD)",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "targets": [{"expr": "sum(stripe_payment_amount_total)"}],
+        "fieldConfig": {"defaults": {"unit": "currencyAUD"}}
+      }
+    ],
+    "time": {"from": "now-24h", "to": "now"},
+    "refresh": "30s"
+  },
+  "overwrite": true
+}
