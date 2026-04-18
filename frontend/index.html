@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AusClean Pro – Enterprise Australian Cleaning Services</title>
+    <meta name="description" content="Professional cleaning services across Australia. End-of-lease, deep clean, NDIS supported. Book online with Stripe payments.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --accent: #d946ef;
+            --success: #16a34a;
+            --warning: #ca8a04;
+            --error: #dc2626;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; color: var(--gray-900); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        header { background: linear-gradient(135deg, var(--primary), #0c4a6e); color: white; padding: 16px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        nav { display: flex; gap: 24px; }
+        nav a { color: white/90; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        nav a:hover { color: white; }
+        .mobile-menu { display: none; background: none; border: none; color: white; cursor: pointer; }
+
+        /* Hero */
+        .hero { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 100px 0 80px; text-align: center; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 16px; line-height: 1.1; }
+        .hero h1 span { background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.25rem; opacity: 0.9; max-width: 600px; margin: 0 auto 32px; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; font-size: 1rem; }
+        .btn-primary { background: white; color: var(--primary); }
+        .btn-primary:hover { background: var(--gray-100); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .btn-outline { background: rgba(255,255,255,0.15); color: white; border: 2px solid rgba(255,255,255,0.3); }
+        .btn-outline:hover { background: rgba(255,255,255,0.25); }
+        .btn-submit { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2,132,199,0.3); }
+
+        /* Features */
+        .features { padding: 80px 0; background: var(--gray-50); }
+        .features h2 { text-align: center; font-size: 2rem; margin-bottom: 48px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+        .feature-card { background: white; padding: 32px; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .feature-card:hover { transform: translateY(-4px); }
+        .feature-icon { font-size: 36px; margin-bottom: 16px; }
+        .feature-card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+        .feature-card p { color: var(--gray-600); }
+
+        /* Services / Segments */
+        .services { padding: 80px 0; }
+        .services h2 { text-align: center; font-size: 2rem; margin-bottom: 12px; }
+        .services > .container > p { text-align: center; color: var(--gray-600); margin-bottom: 48px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .service-card { border: 2px solid var(--gray-200); border-radius: 16px; padding: 32px; transition: all 0.2s; }
+        .service-card:hover { border-color: var(--primary); box-shadow: 0 8px 20px rgba(2,132,199,0.1); }
+        .service-card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+        .service-card p { color: var(--gray-600); margin-bottom: 16px; }
+        .service-price { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        .service-price span { font-size: 0.875rem; font-weight: 400; color: var(--gray-600); }
+        .service-duration { font-size: 0.875rem; color: var(--gray-600); margin-bottom: 16px; }
+
+        /* Booking Form */
+        .booking { padding: 80px 0; background: var(--gray-50); }
+        .booking h2 { text-align: center; font-size: 2rem; margin-bottom: 48px; }
+        .booking-form { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px 16px; border: 2px solid var(--gray-200); border-radius: 10px;
+            font-size: 1rem; transition: border-color 0.2s; font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--primary);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-actions { margin-top: 24px; }
+        .form-actions .btn { width: 100%; justify-content: center; padding: 16px; font-size: 1.1rem; }
+
+        /* Chat */
+        .chat-section { padding: 80px 0; }
+        .chat-section h2 { text-align: center; font-size: 2rem; margin-bottom: 32px; }
+        .chat-container { max-width: 600px; margin: 0 auto; border: 2px solid var(--gray-200); border-radius: 20px; overflow: hidden; }
+        .chat-header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
+        .chat-messages { height: 400px; overflow-y: auto; padding: 20px; background: var(--gray-50); }
+        .message { margin-bottom: 16px; display: flex; }
+        .message.user { justify-content: flex-end; }
+        .message-bot { background: white; padding: 12px 16px; border-radius: 16px 16px 16px 4px; max-width: 80%; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .message-user { background: var(--primary); color: white; padding: 12px 16px; border-radius: 16px 16px 4px 16px; max-width: 80%; }
+        .chat-input { display: flex; padding: 16px; border-top: 1px solid var(--gray-200); background: white; }
+        .chat-input input { flex: 1; padding: 12px 16px; border: 2px solid var(--gray-200); border-radius: 10px; font-size: 1rem; }
+        .chat-input input:focus { outline: none; border-color: var(--primary); }
+        .chat-input button { margin-left: 8px; padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        .chat-input button:hover { background: var(--primary-dark); }
+
+        /* Footer */
+        footer { background: var(--gray-900); color: white; padding: 60px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h3 { margin-bottom: 16px; font-size: 1.1rem; }
+        .footer-col a { color: rgba(255,255,255,0.7); text-decoration: none; display: block; margin-bottom: 8px; }
+        .footer-col a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; color: rgba(255,255,255,0.5); font-size: 0.875rem; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 24px; right: 24px; padding: 16px 24px; border-radius: 12px; color: white; font-weight: 600; z-index: 999; transform: translateY(100px); opacity: 0; transition: all 0.3s; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--error); }
+        .toast.loading { background: var(--primary); }
+
+        /* Loading spinner */
+        .spinner { width: 20px; height: 20px; border: 2px solid white; border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .mobile-menu { display: block; }
+            .form-row { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="logo">🧹 AusClean Pro</div>
+        <nav>
+            <a href="#services">Services</a>
+            <a href="#booking">Book Now</a>
+            <a href="#chat">AI Assistant</a>
+            <a href="#about">About</a>
+        </nav>
+        <button class="mobile-menu" onclick="document.querySelector('nav').style.display = document.querySelector('nav').style.display === 'flex' ? 'none' : 'flex'">☰</button>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <h1>Professional Cleaning,<br><span>Simplified</span></h1>
+        <p>End-of-lease, deep cleaning, NDIS-supported services across Australia. Book online in 60 seconds with secure Stripe payments.</p>
+        <div class="hero-buttons">
+            <a href="#booking" class="btn btn-primary">📅 Book a Clean</a>
+            <a href="#services" class="btn btn-outline">💰 View Pricing</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features">
+    <div class="container">
+        <h2>Why AusClean Pro?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Insured & Police-Checked</h3>
+                <p>All cleaners are fully insured, WWCC verified, and police-checked for your peace of mind.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Bond-Back Guarantee</h3>
+                <p>End-of-lease cleans come with a 100% bond-back guarantee. We clean until the agent is satisfied.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">♿</div>
+                <h3>NDIS Approved</h3>
+                <p>NDIS Price Guide 2026 compliant. Self-managed, plan-managed, and NDIA-managed participants welcome.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Secure Stripe Payments</h3>
+                <p>All major cards accepted. Prices include 10% GST. Instant receipt via email.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered Booking</h3>
+                <p>Our AI assistant recommends the right service, duration, and add-ons for your property.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏢</div>
+                <h3>Strata Compliant</h3>
+                <p>NSW, VIC, QLD, SA, WA, TAS, NT, ACT — state-specific strata compliance checks included.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+    <div class="container">
+        <h2>Our Services</h2>
+        <p>All prices in AUD, including 10% GST</p>
+        <div class="services-grid" id="services-grid">
+            <div class="service-card">
+                <h3>Regular Clean</h3>
+                <p>Standard home or office cleaning — dusting, vacuuming, mopping, kitchens, bathrooms.</p>
+                <div class="service-price">$89 <span>AUD incl. GST</span></div>
+                <div class="service-duration">⏱ 2 hours</div>
+            </div>
+            <div class="service-card">
+                <h3>Deep Clean</h3>
+                <p>Thorough deep cleaning for all areas — behind appliances, inside cupboards, windows.</p>
+                <div class="service-price">$179 <span>AUD incl. GST</span></div>
+                <div class="service-duration">⏱ 4 hours, 2 cleaners</div>
+            </div>
+            <div class="service-card">
+                <h3>End of Lease</h3>
+                <p>Bond-back guaranteed. Full property clean to agent standards. NSW/VIC/QLD compliant.</p>
+                <div class="service-price">$229 <span>AUD incl. GST</span></div>
+                <div class="service-duration">⏱ 5 hours</div>
+            </div>
+            <div class="service-card">
+                <h3>Carpet Clean</h3>
+                <p>Professional steam carpet cleaning — up to 3 rooms included.</p>
+                <div class="service-price">$149 <span>AUD incl. GST</span></div>
+                <div class="service-duration">⏱ 2.5 hours</div>
+            </div>
+            <div class="service-card">
+                <h3>Window Clean</h3>
+                <p>Interior + exterior window cleaning — ground floor, up to 10 windows.</p>
+                <div class="service-price">$119 <span>AUD incl. GST</span></div>
+                <div class="service-duration">⏱ 1.5 hours</div>
+            </div>
+            <div class="service-card">
+                <h3>Strata / Common Area</h3>
+                <p>Strata compliance check + common area cleaning. All 8 states supported.</p>
+                <div class="service-price">$199 <span>AUD incl. GST</span></div>
+                <div class="service-duration">⏱ 3 hours</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Form -->
+<section class="booking" id="booking">
+    <div class="container">
+        <h2>Book Your Clean</h2>
+        <form class="booking-form" id="booking-form">
+            <div class="form-group">
+                <label for="service">Service Type</label>
+                <select id="service" required>
+                    <option value="">Select a service...</option>
+                    <option value="Regular Clean">Regular Clean — $89</option>
+                    <option value="Deep Clean">Deep Clean — $179</option>
+                    <option value="End of Lease">End of Lease — $229</option>
+                    <option value="Carpet Clean">Carpet Clean — $149</option>
+                    <option value="Window Clean">Window Clean — $119</option>
+                    <option value="Strata / Common Area">Strata / Common Area — $199</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bedrooms">Bedrooms</label>
+                    <select id="bedrooms">
+                        <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bathrooms">Bathrooms</label>
+                    <select id="bathrooms">
+                        <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="suburb">Suburb</label>
+                <input type="text" id="suburb" placeholder="e.g. Parramatta" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select id="state" required>
+                        <option value="NSW">NSW</option><option value="VIC">VIC</option><option value="QLD">QLD</option>
+                        <option value="SA">SA</option><option value="WA">WA</option><option value="TAS">TAS</option>
+                        <option value="NT">NT</option><option value="ACT">ACT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="postcode">Postcode</label>
+                    <input type="text" id="postcode" placeholder="e.g. 2150" required pattern="[0-9]{4}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="booking-date">Preferred Date</label>
+                <input type="datetime-local" id="booking-date" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Full Address</label>
+                <input type="text" id="address" placeholder="Unit/Street" required>
+            </div>
+            <div class="form-group">
+                <label for="notes">Special Instructions (optional)</label>
+                <textarea id="notes" rows="3" placeholder="Access instructions, parking, pets..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit" id="submit-btn">
+                    💳 Book & Pay with Stripe
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- AI Chat -->
+<section class="chat-section" id="chat">
+    <div class="container">
+        <h2>🤖 AI Cleaning Assistant</h2>
+        <div class="chat-container">
+            <div class="chat-header">
+                <span>🧠</span>
+                <div>
+                    <strong>AusClean AI</strong>
+                    <div style="font-size: 0.75rem; opacity: 0.8;">Online • NDIS & Pricing Expert</div>
+                </div>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message">
+                    <div class="message-bot">
+                        👋 G'day! I'm the AusClean AI assistant. I can help with:<br><br>
+                        • 💰 <strong>Pricing</strong> — Get instant quotes<br>
+                        • 📅 <strong>Booking</strong> — Find the right service<br>
+                        • ♿ <strong>NDIS</strong> — Plan management & rates<br>
+                        • 🏢 <strong>Strata</strong> — State compliance info<br><br>
+                        What can I help you with?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="Ask about pricing, NDIS, services..." onkeydown="if(event.key==='Enter')sendChat()">
+                <button onclick="sendChat()">Send</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="about">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>🧹 AusClean Pro</h3>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.875rem;">Enterprise Australian cleaning services. NDIS approved. Bond-back guaranteed. All 8 states.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <a href="#services">Regular Clean</a>
+                <a href="#services">Deep Clean</a>
+                <a href="#services">End of Lease</a>
+                <a href="#services">Carpet & Window</a>
+                <a href="#services">Strata / Common Area</a>
+            </div>
+            <div class="footer-col">
+                <h3>Compliance</h3>
+                <a href="#">NDIS Price Guide 2026</a>
+                <a href="#">NSW Fair Trading</a>
+                <a href="#">VIC Consumer Affairs</a>
+                <a href="#">GST Included (10%)</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <a href="mailto:support@auscleanpro.com.au">support@auscleanpro.com.au</a>
+                <a href="tel:13002532628">1300-CLEAN-AU</a>
+                <p style="color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-top: 12px;">ABN: 12 345 678 901</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 AusClean Pro. All rights reserved. | ABN 12 345 678 901 | v5.0.0
+        </div>
+    </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+    const API_URL = window.location.origin;
+
+    // Toast notification
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast ${type} show`;
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    // Booking form submission
+    document.getElementById('booking-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        btn.innerHTML = '<span class="spinner"></span> Processing...';
+        btn.disabled = true;
+
+        const serviceMap = { 'Regular Clean': 89, 'Deep Clean': 179, 'End of Lease': 229, 'Carpet Clean': 149, 'Window Clean': 119, 'Strata / Common Area': 199 };
+        const service = document.getElementById('service').value;
+
+        try {
+            const payload = {
+                service_type: service.toLowerCase().replace(/ /g, '-'),
+                bedrooms: parseInt(document.getElementById('bedrooms').value),
+                bathrooms: parseInt(document.getElementById('bathrooms').value),
+                address: document.getElementById('address').value,
+                suburb: document.getElementById('suburb').value,
+                state: document.getElementById('state').value,
+                postcode: document.getElementById('postcode').value,
+                booking_date: document.getElementById('booking-date').value,
+                notes: document.getElementById('notes').value,
+            };
+
+            // First create the booking
+            const bookingRes = await fetch(`${API_URL}/api/v1/bookings`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...payload, segment_id: 1 }),
+            });
+
+            if (!bookingRes.ok) {
+                const err = await bookingRes.json();
+                throw new Error(err.detail || 'Booking failed');
+            }
+
+            const booking = await bookingRes.json();
+
+            // Create Stripe PaymentIntent
+            const paymentRes = await fetch(`${API_URL}/api/v1/payments/create-intent`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: serviceMap[service] || 89,
+                    customer_email: 'customer@example.com',
+                    booking_id: booking.id,
+                }),
+            });
+
+            if (paymentRes.ok) {
+                showToast(`✅ Booking #${booking.id} created! Stripe payment ready.`, 'success');
+            } else {
+                showToast(`✅ Booking confirmed (ID: ${booking.id}). Payment can be added later.`, 'success');
+            }
+        } catch (err) {
+            showToast(`❌ ${err.message}`, 'error');
+        } finally {
+            btn.innerHTML = '💳 Book & Pay with Stripe';
+            btn.disabled = false;
+        }
+    });
+
+    // AI Chat
+    async function sendChat() {
+        const input = document.getElementById('chat-input');
+        const messages = document.getElementById('chat-messages');
+        const msg = input.value.trim();
+        if (!msg) return;
+
+        // User message
+        messages.innerHTML += `<div class="message user"><div class="message-user">${msg}</div></div>`;
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+
+        // Loading
+        messages.innerHTML += `<div class="message"><div class="message-bot"><span class="spinner"></span> Thinking...</div></div>`;
+        messages.scrollTop = messages.scrollHeight;
+
+        try {
+            const res = await fetch(`${API_URL}/api/v1/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: msg }),
+            });
+
+            // Remove loading
+            messages.lastElementChild.remove();
+
+            if (res.ok) {
+                const data = await res.json();
+                messages.innerHTML += `<div class="message"><div class="message-bot">${data.response}</div></div>`;
+            } else {
+                messages.innerHTML += `<div class="message"><div class="message-bot">Sorry, I'm having trouble right now. Try again or email support@auscleanpro.com.au</div></div>`;
+            }
+        } catch {
+            messages.lastElementChild.remove();
+            messages.innerHTML += `<div class="message"><div class="message-bot">Connection error. Please check the API is running.</div></div>`;
+        }
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Set minimum date on booking form
+    const dateInput = document.getElementById('booking-date');
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    dateInput.min = now.toISOString().slice(0, 16);
+</script>
+
+</body>
+</html>
